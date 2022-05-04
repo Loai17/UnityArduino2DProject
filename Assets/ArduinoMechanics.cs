@@ -1,0 +1,128 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.IO.Ports;
+using System;
+
+public class ArduinoMechanics : MonoBehaviour
+{
+    public float xVal, yVal;
+    public bool fireToggle = false;
+    Animator anim;
+
+    public string port = "COM5";
+    public int baudrate = 9600;
+    SerialPort arduinoPort;
+    bool isStreaming = false;
+
+    public float speed = 100;
+    public GameObject player;
+/*    Rigidbody ballBody;*/
+    float tempTime;
+    float sendRate = 0.1f;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+        OpenConnection();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        player.transform.position = new Vector3(xVal, yVal, 0);
+        JoystickToMovement();
+
+        if (fireToggle) {
+            anim.SetBool("onFire", true);
+        } else
+        {
+            anim.SetBool("onFire", false);
+        }
+    }
+
+    void JoystickToMovement()
+    {
+        ArduinoInfo info = ConvertArduinoInput();
+        float x = info.xVal; float y = info.yVal; int jButton = info.jButton; int fire = info.fireSensor;
+        
+        // Movement Logic
+        if (x <= 0.17 && y <= 0.17 && x >= (-0.17) && y >= (-0.17)) { /*Do nothing*/ }
+        else if (x <= 0.17 && x >= (-0.17) && y > 1.7) { yVal -= (y * speed); Debug.Log("Down"); }
+        else if (x <= 0.17 && x >= (-0.17) && y < (-1.7)) { yVal -= (y * speed); Debug.Log("Up"); }
+        else if (y <= 0.17 && y >= (-0.17) && x > 1.7) { xVal += (x * speed); Debug.Log("Right"); }
+        else if (y <= 0.17 && y >= (-0.17) && x < (-1.7)) { xVal += (x * speed); Debug.Log("Left"); }
+        else if (x >= 1.7 && y <= (-1.7)) { xVal += (x * speed); yVal -= (y * speed); Debug.Log("Up-Right"); }
+        else if (y >= 1.7 && x <= (-1.7)) { xVal += (x * speed); yVal -= (y * speed); Debug.Log("Down-Right"); }
+        else if (x <= (1.7) && y <= (-1.7)) { xVal += (x * speed); yVal -= (y * speed); Debug.Log("Up-Left"); }
+        else if (x >= 1.7 && y >= 1.7) { xVal += (x * speed); yVal -= (y * speed); Debug.Log("Down-Left"); }
+        else { 
+            
+        }
+    }
+
+    ArduinoInfo ConvertArduinoInput()
+    {
+        if (!arduinoPort.IsOpen) OpenConnection();
+        string line = ReadSerialPort();
+        Debug.Log(line);
+        if (line == null) return new ArduinoInfo();
+
+        string[] attributes = line.Split(',');
+        string x = attributes[0];
+        string y = attributes[1];
+        int jButton = int.Parse(attributes[2]);
+        
+        int fire = int.Parse(attributes[3]);
+        if (fire == 1) fireToggle = true;
+        else fireToggle = false;
+
+        float _x = float.Parse(x) - 2.5f;
+        float _y = float.Parse(y) - 2.5f;
+
+        ArduinoInfo info = new ArduinoInfo();
+        info.xVal = _x;
+        info.yVal = _y;
+        info.jButton = jButton;
+        info.fireSensor = fire;
+
+        return info;
+    }
+
+    private struct ArduinoInfo {
+        public float xVal;
+        public float yVal;
+        public int jButton;
+        public int fireSensor;   
+    }
+
+    void OpenConnection()
+    {
+        isStreaming = true;
+
+        arduinoPort = new SerialPort(port, baudrate);
+        arduinoPort.ReadTimeout = 100;
+        arduinoPort.Open();
+    }
+
+    void CloseConnection()
+    {
+        arduinoPort.Close();
+    }
+
+    string ReadSerialPort(int timeout = 100)
+    {
+        string message;
+        arduinoPort.ReadTimeout = timeout;
+        try
+        {
+            message = arduinoPort.ReadLine();
+            return message;
+        }
+        catch (TimeoutException)
+        {
+            return null;
+        }
+    }
+}
