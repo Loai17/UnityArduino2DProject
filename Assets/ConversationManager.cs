@@ -14,8 +14,8 @@ public class ConversationManager : MonoBehaviour
     void Start()
     {
         start = new Node(null, "Hello and Welcome to this Game!");
-        start1_1 = new Node(start, "First Option");
-
+        Node start1_1 = new Node(start, "First Option");
+        // Added "Node" here on the line above me - was giving me an error and preventing the game from playing. -L
         
         tutorialConversationTree = new Tree(start);
         

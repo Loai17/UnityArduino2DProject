@@ -8,6 +8,9 @@ public class ArduinoMechanics : MonoBehaviour
 {
     public float xVal, yVal;
     public bool fireToggle = false;
+    public bool joystickToggle = false;
+    public bool rotateToggle = false;
+    public bool cardInserted = false;
     Animator anim;
 
     public string port = "COM5";
@@ -73,10 +76,21 @@ public class ArduinoMechanics : MonoBehaviour
         string x = attributes[0];
         string y = attributes[1];
         int jButton = int.Parse(attributes[2]);
+        if (jButton == 0) joystickToggle = true;
+        else joystickToggle = false;
         
         int fire = int.Parse(attributes[3]);
         if (fire == 1) fireToggle = true;
         else fireToggle = false;
+
+        int rotatingCounter = int.Parse(attributes[4]);
+        int rButton = int.Parse(attributes[5]);
+        if (rButton == 1) rotateToggle = true;
+        else rotateToggle = false;
+
+        int cardReader = int.Parse(attributes[6]);
+        if (cardReader == 1) cardInserted = true;
+        else cardInserted = false;
 
         float _x = float.Parse(x) - 2.5f;
         float _y = float.Parse(y) - 2.5f;
@@ -86,6 +100,9 @@ public class ArduinoMechanics : MonoBehaviour
         info.yVal = _y;
         info.jButton = jButton;
         info.fireSensor = fire;
+        info.rotateCounter = rotatingCounter;
+        info.rButton = rButton;
+        info.cardInserted = cardReader; 
 
         return info;
     }
@@ -94,7 +111,10 @@ public class ArduinoMechanics : MonoBehaviour
         public float xVal;
         public float yVal;
         public int jButton;
-        public int fireSensor;   
+        public int fireSensor;
+        public int rotateCounter;
+        public int rButton;
+        public int cardInserted;
     }
 
     void OpenConnection()
