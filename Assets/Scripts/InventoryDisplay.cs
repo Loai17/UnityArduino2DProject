@@ -9,10 +9,29 @@ public class InventoryDisplay : MonoBehaviour
     public float spacing = 0.15f;
     float space = 0.35f;
     ArduinoMechanics arM;
+
+    private void Awake()
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("InventoryDisplay");
+
+        if (objs.Length > 1)
+        {
+            foreach (GameObject o in objs)
+            {
+                if (o.transform.childCount == 0) 
+                {
+                    Destroy(o);
+                }
+            }
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        invL = GameObject.Find("Player").GetComponent<InventoryList>();
+        invL = GameObject.Find("GameManager").GetComponent<InventoryList>();
         arM = GameObject.Find("Player").GetComponent<ArduinoMechanics>();
     }
 

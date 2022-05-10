@@ -18,8 +18,14 @@ public class ConversationManager : MonoBehaviour
     public List<ButtonInfo> buttons = new List<ButtonInfo>();
     public List<Button> buttonsL = new List<Button>();
     public Text staticTextField;
-    
 
+    public int TreeNum;
+    public List<Tree> trees = new List<Tree>();
+    public ArduinoMechanics aM;
+
+    public float delayTime = 0.5f;
+    public float timer;
+    public bool choosingAllowed;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +67,10 @@ public class ConversationManager : MonoBehaviour
             fireStation2Tree.addNode(FF2_2, FF1_2);
 
 
-
+        trees.Add(tutorialTree);
+        trees.Add(fireStation1Tree);
+        trees.Add(fireStation2Tree);
+        
 
 
         foreach (Button b in buttonsL)
@@ -71,16 +80,36 @@ public class ConversationManager : MonoBehaviour
             buttons.Add(bI);
         }
 
-        currentTree = fireStation2Tree;
+        currentTree = trees[TreeNum];
         initButtons(currentTree);
 
-
+        aM = GameObject.Find("Player").GetComponent<ArduinoMechanics>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (timer < delayTime)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            timer = 0;
+            choosingAllowed = true;
+        }
+        if (aM.joystickToggle && choosingAllowed)
+        {
+            choosingAllowed = false;
+            timer = 0;
+            ButtonClickArduino(1);
+        }
+        if (aM.rotateToggle && choosingAllowed)
+        {
+            choosingAllowed = false;
+            timer = 0;
+            ButtonClickArduino(0);
+        }
     }
 
     public void SceneChange()
@@ -103,6 +132,21 @@ public class ConversationManager : MonoBehaviour
         }
         
         
+    }
+
+    public void ButtonClickArduino(int i)
+    {
+
+        if (currentTree.Step(currentTree.getNextDisplayOptions()[i]))
+        {
+            initButtons(currentTree);
+        }
+        else
+        {
+            Debug.Log("End of Tree reached!");
+            currentTree.current = currentTree.nodes[0];
+            initButtons(currentTree);
+        }
     }
 
     void initButtons(Tree t)

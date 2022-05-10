@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 78334525592456542}
   - component: {fileID: 78334525592456543}
   - component: {fileID: 78334525592456540}
-  - component: {fileID: 78334525592456541}
   - component: {fileID: 78334525592456539}
   - component: {fileID: 78334525592456538}
   - component: {fileID: 78334525592456537}
@@ -106,23 +105,11 @@ MonoBehaviour:
   rotateToggle: 0
   cardInserted: 0
   keyboardControl: 0
-  port: COM5
+  port: COM6
   baudrate: 9600
   speed: 0.1
   player: {fileID: 78334525592456528}
---- !u!114 &78334525592456541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 78334525592456528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eefeafcdbf1200f49ba20d15abe9ef24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory: []
+  blockY: 0
 --- !u!95 &78334525592456539
 Animator:
   serializedVersion: 3

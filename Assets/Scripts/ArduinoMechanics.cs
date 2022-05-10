@@ -12,11 +12,11 @@ public class ArduinoMechanics : MonoBehaviour
     public bool rotateToggle = false;
     public bool cardInserted = false;
 
-    public bool keyboardControl = false;
+    public bool keyboardControl = true;
 
     Animator anim;
 
-    public string port = "COM5";
+    public string port = "COM6";
     public int baudrate = 9600;
     SerialPort arduinoPort;
     bool isStreaming = false;
@@ -27,6 +27,8 @@ public class ArduinoMechanics : MonoBehaviour
     float tempTime;
     float sendRate = 0.1f;
 
+    public bool blockY;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,10 +36,24 @@ public class ArduinoMechanics : MonoBehaviour
         OpenConnection();
     }
 
+    private void OnDestroy()
+    {
+        CloseConnection();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        player.transform.position = new Vector3(xVal, yVal, 0);
+
+        if (!blockY)
+        {
+            player.transform.position = new Vector3(xVal, yVal, 0);
+        }
+       else
+        {
+            player.transform.position = new Vector3(xVal, this.transform.position.y, 0);
+        }
+        
         if (keyboardControl)
         {
             KeyboardMovement();

@@ -9,6 +9,7 @@ TagManager:
   - NextLocationLogic
   - Location1
   - Location2
+  - InventoryDisplay
   layers:
   - Default
   - TransparentFX
