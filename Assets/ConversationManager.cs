@@ -7,27 +7,33 @@ public class ConversationManager : MonoBehaviour
 {
 
     Node start;
-    Tree tutorialTree;
+    Node root;
+    public Tree tutorialTree;
     public Text text;
 
     public List<ButtonInfo> buttons = new List<ButtonInfo>();
     public List<Button> buttonsL = new List<Button>();
+    public Text staticTextField;
     
 
 
     // Start is called before the first frame update
     void Start()
     {
-        start = new Node("Hello and Welcome to this Game!");
+        Node root = new Node("", "Hello123");
+        start = new Node("Hello and Welcome to this Game!", "How are you today?");
         Node start1_1 = new Node("First Option");
         Node start1_2 = new Node("Second Option");
-        Node start1_3 = new Node("Third Option");
+        Node start2_1 = new Node("Third Option");
+        Node start2_2 = new Node("Third Option B");
         // Added "Node" here on the line above me - was giving me an error and preventing the game from playing. -L
 
-        tutorialTree = new Tree(start);
+        tutorialTree = new Tree(root);
+        tutorialTree.addNode(start, root);
         tutorialTree.addNode(start1_1, start);
         tutorialTree.addNode(start1_2, start);
-        tutorialTree.addNode(start1_3, start1_2);
+        tutorialTree.addNode(start2_1, start1_2);
+        tutorialTree.addNode(start2_2, start1_1);
 
         
         foreach (Button b in buttonsL)
@@ -38,52 +44,41 @@ public class ConversationManager : MonoBehaviour
         }
 
         initButtons(tutorialTree);
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            tutorialTree.Step(tutorialTree.getNextOptions()[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.H) && tutorialTree.current.getParent() != null)
-        {
-            tutorialTree.Step(tutorialTree.current.getParent());
-        }
     }
 
     public void ButtonClick(Button b)
     {
-        //Debug.Log(getInfoFromButton(b).n);
-        if (getInfoFromButton(b).b != null) tutorialTree.Step(getInfoFromButton(b).n);
-        initButtons(tutorialTree);
-    }
 
-    public ButtonInfo getInfoFromButton(Button b)
-    {
-        foreach (ButtonInfo bI in buttons)
+        if (tutorialTree.Step(tutorialTree.getNextDisplayOptions()[buttonsL.IndexOf(b)]))
         {
-            //Debug.Log(b);
-            //Debug.Log(bI.b);
-            //Debug.Log("===");
-            if (b == bI.b)
-            {
-                return bI;
-            }
+            initButtons(tutorialTree);
         }
-        return new ButtonInfo();
+        else
+        {
+            Debug.Log("End of Tree reached!");
+            tutorialTree.current = tutorialTree.nodes[0];
+            initButtons(tutorialTree);
+        }
+        
+        
     }
 
     void initButtons(Tree t)
     {
-        Debug.Log(t.getNextDisplayOptions());
         List<Node> nodes = t.getNextDisplayOptions();
         int i = 0;
         foreach (Node n in nodes)
         {
             buttons[i].b.transform.GetChild(0).GetComponent<Text>().text = n.getText();
+            staticTextField.text = t.current.staticText;
             ButtonInfo h = buttons[i];
             h.n = n;
             buttons[i].b.gameObject.SetActive(true);
@@ -104,13 +99,14 @@ public class ConversationManager : MonoBehaviour
     public class Tree
     {
         Node root;
-        List<Node> nodes = new List<Node>();
+        public List<Node> nodes = new List<Node>();
         public Node current;
 
         public Tree(Node r)
         {
             root = r;
             current = root;
+            nodes.Add(root);
         }
 
         public void addNode(Node n, Node parent)
@@ -128,12 +124,11 @@ public class ConversationManager : MonoBehaviour
 
         public List<Node> getNextOptions()
         {
-            Debug.Log(current);
-            Debug.Log(current.getChildren());
             List<Node> h = current.getChildren();
             h.Add(current.getParent());
             return h;
         }
+
 
         public List<Node> getNextDisplayOptions()
         {
@@ -142,9 +137,10 @@ public class ConversationManager : MonoBehaviour
 
         public bool Step(Node n)
         {
-            if (getNextOptions().Contains(n))
+            if (getNextDisplayOptions().Contains(n))
             {
                 current = n;
+                if (n.getChildren().Count == 0) return false;
                 return true;
             }
             return false;
@@ -156,13 +152,16 @@ public class ConversationManager : MonoBehaviour
     {
 
         List<Node> children = new List<Node>();
-        Node parent;
+        public Node parent;
         string textToDisplay;
-        
+        public string staticText;
 
-        public Node(string text)
+
+
+        public Node(string text, string _staticText = "")
         {
             textToDisplay = text;
+            staticText = _staticText;
         }
 
         public Node addChild(Node newChild)
