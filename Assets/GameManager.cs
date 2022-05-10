@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Graph mapRef;
     public GraphNode currentLocationRef;
     public bool first = false;
+    public int treesDestroyed;
     /*    public string currentLocationName;
     */
     void Awake() 
