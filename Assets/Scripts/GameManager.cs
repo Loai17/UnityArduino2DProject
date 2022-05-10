@@ -5,19 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static Graph map;
-    public static GraphNode currentLocation;
-    public Graph mapRef;
-    public GraphNode currentLocationRef;
+    public Graph map;
+    public GraphNode currentLocation;
     public bool first = false;
     public int treesDestroyed;
     /*    public string currentLocationName;
     */
-    void Awake() 
+    void Awake()
     {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("GameManager");
+
+        if (objs.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+
         DontDestroyOnLoad(this.gameObject);
     }
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,10 +53,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (map != mapRef) mapRef = map;
-        if (currentLocation != currentLocationRef) currentLocationRef = currentLocation;
-
-        if(SceneManager.GetActiveScene().name == "NextLocation") 
+        /*        if (map != mapRef) mapRef = map;
+                if (currentLocation != currentLocationRef) currentLocationRef = currentLocation;
+        */
+        if (SceneManager.GetActiveScene().name == "NextLocation")
         {
             GameObject location1 = GameObject.FindGameObjectWithTag("Location1");
             GameObject location2 = GameObject.FindGameObjectWithTag("Location2");
@@ -60,7 +65,7 @@ public class GameManager : MonoBehaviour
             locations.Add(location1); locations.Add(location2);
 
             GraphNode[] nextLocations = currentLocation.getNeighbors();
-            for (int i = 0; i < nextLocations.Length; i++) 
+            for (int i = 0; i < nextLocations.Length; i++)
             {
                 locations[i].GetComponent<GoToLocation>().nextLocation = nextLocations[i].ToString();
                 locations[i].GetComponent<GoToLocation>().textUI.text = nextLocations[i].ToString();

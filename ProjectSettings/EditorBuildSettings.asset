@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/External Packages/Unity 2D Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Forest.unity
+    path: Assets/Scenes/Forest.unity
     guid: c59d52ca3ceb4474899e515226f771e3
   - enabled: 1
-    path: Assets/NextLocation.unity
+    path: Assets/Scenes/House.unity
+    guid: 6449524ae8525464ebbe118bac539a88
+  - enabled: 1
+    path: Assets/Scenes/Firestation.unity
+    guid: b68de6ba65a847742a3e45f5cd2e6c54
+  - enabled: 1
+    path: Assets/Scenes/NextLocation.unity
     guid: 1d4b94919f238e344b9cf1da00f34009
   m_configObjects: {}

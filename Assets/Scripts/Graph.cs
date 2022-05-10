@@ -26,6 +26,14 @@ public class Graph
         return edge;
     }
 
+    public GraphNode getNodeByName(string name) 
+    {
+        foreach (GraphNode location in locations) 
+        {
+            if (location.LocationName == name) return location;
+        }
+        return null;
+    }
 
     public void ToString() {
         Debug.Log("Graph:");

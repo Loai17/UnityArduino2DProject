@@ -27,8 +27,11 @@ public class GoToLocation : MonoBehaviour
 
     void Update()
     {
+        if(textUI.text != nextLocation) textUI.text = nextLocation; 
+
         if ((cardNeeded && inRange && playerArduino.cardInserted) || (!cardNeeded && inRange))
         {
+            gameManager.currentLocation = gameManager.map.getNodeByName(nextLocation);
             SceneManager.LoadScene(nextLocation);
         }
 

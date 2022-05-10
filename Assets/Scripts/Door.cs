@@ -26,7 +26,7 @@ public class Door : MonoBehaviour
 
         if ((cardNeeded && playerInRange && playerArduino.cardInserted) || (!cardNeeded && playerInRange)) {
             if (SceneManager.GetActiveScene().name != "NextLocation") SceneManager.LoadScene("NextLocation");
-            else SceneManager.LoadScene(gameManager.currentLocationRef.ToString());
+            else SceneManager.LoadScene(gameManager.currentLocation.ToString());
         }
     }
 

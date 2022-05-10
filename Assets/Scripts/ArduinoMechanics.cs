@@ -12,7 +12,7 @@ public class ArduinoMechanics : MonoBehaviour
     public bool rotateToggle = false;
     public bool cardInserted = false;
 
-    public bool keyboardControl = true;
+    public bool keyboardControl = false;
 
     Animator anim;
 
