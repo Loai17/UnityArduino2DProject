@@ -69,7 +69,7 @@ public class ArduinoMechanics : MonoBehaviour
     {
         if (!arduinoPort.IsOpen) OpenConnection();
         string line = ReadSerialPort();
-        Debug.Log(line);
+        //Debug.Log(line);
         if (line == null) return new ArduinoInfo();
 
         string[] attributes = line.Split(',');

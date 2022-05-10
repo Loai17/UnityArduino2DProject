@@ -21,6 +21,8 @@ public class Graph : MonoBehaviour
     {
         GraphEdge edge = new GraphEdge(locationA, locationB, price);
         edges.Add(edge);
+       /* locationA.AddEdge(edge);
+        locationB.AddEdge(edge);*/
         return edge;
     }
 

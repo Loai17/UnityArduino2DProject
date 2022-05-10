@@ -21,11 +21,15 @@ public class GameManager : MonoBehaviour
         map.addLocation(locationC);
 
         map.addEdge(locationA, locationB, 0);
+        map.addEdge(locationA, locationC, 0);
+        map.addEdge(locationB, locationA, 0);
         map.addEdge(locationB, locationC, 0);
         map.addEdge(locationC, locationA, 0);
+        map.addEdge(locationC, locationB, 0);
+
 
         map.ToString();
-        currentLocation = locationC;
+        currentLocation = locationB;
         Debug.Log(currentLocation.getNeighbors());
     }
 

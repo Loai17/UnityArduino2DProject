@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class GraphEdge : MonoBehaviour
 {
-    private GraphNode locationA;
+    private GraphNode _locationA;
 
     public GraphNode LocationA
     {
         get
         {
-            return locationA;
+            return _locationA;
         }
     }
 
-    private GraphNode locationB;
+    private GraphNode _locationB;
 
     public GraphNode LocationB
     {
         get
         {
-            return locationB;
+            return _locationB;
         }
     }
 
@@ -36,30 +36,30 @@ public class GraphEdge : MonoBehaviour
 
     public GraphEdge(GraphNode locationA, GraphNode locationB, float weight)
     {
-        this.locationA = locationA;
-        this.locationB = locationB;
+        this._locationA = locationA;
+        this._locationB = locationB;
         this._weight = weight;
-        locationA.AddEdge(this);
-        if (locationA != locationB)
+        _locationA.AddEdge(this);
+        if (_locationA != _locationB)
         {
-            locationB.AddEdge(this);
+            _locationB.AddEdge(this);
         }
     }
 
 
     public bool isIncidentTo(GraphNode node)
     {
-        return (locationA == node || locationB == node);
+        return (_locationA == node || _locationB == node);
     }
 
 
     public override string ToString()
     {
-        return LocationA.ToString() + ", " + LocationB.ToString();
+        return _locationA.ToString() + ", " + _locationB.ToString();
     }
 
     public string ToString2()
     {
-        return LocationA.ToString() + ", " + LocationB.ToString() + ", " + Weight;
+        return _locationA.ToString() + ", " + _locationB.ToString() + ", " + Weight;
     }
 }
