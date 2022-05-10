@@ -10,7 +10,8 @@ public class Interactable : MonoBehaviour
             GameObject player = col.gameObject;
             Debug.Log("Adding item to inventory");
             player.GetComponent<InventoryList>().Add(this.gameObject);
-            this.GetComponent<SpriteRenderer>().enabled = false;
+            //this.GetComponent<SpriteRenderer>().enabled = false;
+            this.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 }

@@ -11,6 +11,9 @@ public class ArduinoMechanics : MonoBehaviour
     public bool joystickToggle = false;
     public bool rotateToggle = false;
     public bool cardInserted = false;
+
+    public bool keyboardControl = true;
+
     Animator anim;
 
     public string port = "COM5";
@@ -35,7 +38,15 @@ public class ArduinoMechanics : MonoBehaviour
     void Update()
     {
         player.transform.position = new Vector3(xVal, yVal, 0);
-        JoystickToMovement();
+        if (keyboardControl)
+        {
+            KeyboardMovement();
+        }
+        else
+        {
+            JoystickToMovement();
+        }
+
 
         if (fireToggle) {
             anim.SetBool("onFire", true);
@@ -62,6 +73,27 @@ public class ArduinoMechanics : MonoBehaviour
         else if (x >= 1.7 && y >= 1.7) { xVal += (x * speed); yVal -= (y * speed); Debug.Log("Down-Left"); }
         else { 
             
+        }
+    }
+
+    void KeyboardMovement()
+    {
+        float constSpeed = 0.3f;
+        if (Input.GetKey(KeyCode.W))
+        {
+            yVal -= (-constSpeed * speed);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            yVal -= (constSpeed * speed);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            xVal += (-constSpeed * speed);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            xVal += (constSpeed * speed);
         }
     }
 
