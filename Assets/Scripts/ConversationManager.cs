@@ -10,6 +10,8 @@ public class ConversationManager : MonoBehaviour
     Node start;
     Node root;
     public Tree tutorialTree;
+    Tree fireStation1Tree;
+    Tree fireStation2Tree;
     public Tree currentTree;
     public Text text;
 
@@ -22,10 +24,10 @@ public class ConversationManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Node root = new Node("", "Already home Honey? Shouldnt you be at work?");
-        tutorialTree = new Tree(root);
+        Node rootT = new Node("", "Already home Honey? Shouldnt you be at work?");
+        tutorialTree = new Tree(rootT);
         start = new Node("I forgot something. I'll have to leave immediatly!", "What did you forget?");
-        tutorialTree.addNode(start, root);
+        tutorialTree.addNode(start, rootT);
             Node N2_1 = new Node("My Keys", "Wait let me get them for you");
             tutorialTree.addNode(N2_1, start);
                 Node N3_1 = new Node("Thanks! See you later :)");
@@ -35,9 +37,33 @@ public class ConversationManager : MonoBehaviour
             tutorialTree.addNode(N2_2, start);
                 Node N3_2 = new Node(":* Bye");
                 tutorialTree.addNode(N3_2, N2_2);
-       
 
-        
+        Node rootF = new Node("", "Where is your Key? I can't let you in without it!");
+        fireStation1Tree = new Tree(rootF);
+        Node F1_1 = new Node("I don't know... Can't you just let me in?", "NO! Go get them!");
+        fireStation1Tree.addNode(F1_1, rootF);
+            Node F2_1 = new Node("Okay okay... I'm already on my way ...");
+            fireStation1Tree.addNode(F2_1, F1_1);
+        Node F1_2 = new Node("I think I maybe left them in the Forst let me go and have a look...", "Good luck!");
+        fireStation1Tree.addNode(F1_2, rootF);
+            Node F2_2 = new Node("Thanks...");
+            fireStation1Tree.addNode(F2_2, F1_2);
+
+        Node rootF2 = new Node("", "I see you got your Key! Anything else to report?");
+        fireStation2Tree = new Tree(rootF2);
+        Node FF1_1 = new Node("Yes there is a fire in the Forest!!", "Then go and put it out1!11!!!1!1");
+        fireStation2Tree.addNode(FF1_1, rootF2);
+            Node FF2_1 = new Node("Okay okay... I'm already on my way ...");
+            fireStation2Tree.addNode(FF2_1, FF1_1);
+        Node FF1_2 = new Node("No nothing unusual! The forest is doing great ;)", "Good to hear");
+        fireStation2Tree.addNode(FF1_2, rootF2);
+            Node FF2_2 = new Node("Yessir. See you later!");
+            fireStation2Tree.addNode(FF2_2, FF1_2);
+
+
+
+
+
         foreach (Button b in buttonsL)
         {
             ButtonInfo bI = new ButtonInfo();
@@ -45,7 +71,7 @@ public class ConversationManager : MonoBehaviour
             buttons.Add(bI);
         }
 
-        currentTree = tutorialTree;
+        currentTree = fireStation2Tree;
         initButtons(currentTree);
 
 
