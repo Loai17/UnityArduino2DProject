@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Graph map;
-    public GraphNode currentLocation;
+    public static Graph map;
+    public static GraphNode currentLocation;
+    public Graph mapRef;
+    public GraphNode currentLocationRef;
+    public bool first = false;
+    /*    public string currentLocationName;
+    */
+    void Awake() 
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -29,7 +38,7 @@ public class GameManager : MonoBehaviour
 
 
         map.ToString();
-        currentLocation = locationB;
+        currentLocation = locationA;
         Debug.Log(currentLocation.getNeighbors());
     }
 
@@ -37,6 +46,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (map != mapRef) mapRef = map;
+        if (currentLocation != currentLocationRef) currentLocationRef = currentLocation;
     }
 }

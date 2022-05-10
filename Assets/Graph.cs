@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Graph : MonoBehaviour
+public class Graph
 {
     List<GraphNode> locations;
     List<GraphEdge> edges;

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GraphNode : MonoBehaviour
+public class GraphNode
 {
     List<GraphEdge> edges;
-    string LocationName;
+    public string LocationName;
 
     public GraphNode(string name)
     {

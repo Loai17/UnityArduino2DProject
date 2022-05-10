@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
-    GameManager gameManager;
+    public GameManager gameManager;
     ArduinoMechanics playerArduino;
     public bool playerInRange = false;
+    public bool cardNeeded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,10 +21,12 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerInRange && playerArduino.cardInserted) {
-            Debug.Log("You may choose one of those next locations:");
-            foreach (GraphNode location in gameManager.currentLocation.getNeighbors())
-                Debug.Log(location.ToString());
+        if(gameManager==null) GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        if(playerArduino==null) GameObject.FindGameObjectWithTag("Player").GetComponent<ArduinoMechanics>();
+
+        if ((cardNeeded && playerInRange && playerArduino.cardInserted) || (!cardNeeded && playerInRange)) {
+            if (SceneManager.GetActiveScene().name != "NextLocation") SceneManager.LoadScene("NextLocation");
+            else SceneManager.LoadScene(gameManager.currentLocationRef.ToString());
         }
     }
 
