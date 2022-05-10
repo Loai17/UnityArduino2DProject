@@ -54,7 +54,7 @@ public class GraphNode : MonoBehaviour
         return 0f;
     }
 
-    public GraphNode[] getNeighbours()
+    public GraphNode[] getNeighbors()
     {
         GraphNode[] neighbours = new GraphNode[edges.Count];
         int i = 0;

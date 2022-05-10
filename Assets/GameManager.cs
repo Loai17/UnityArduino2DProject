@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Graph map;
+    public GraphNode currentLocation;
     
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,10 @@ public class GameManager : MonoBehaviour
         map.addEdge(locationC, locationA, 0);
 
         map.ToString();
+        currentLocation = locationC;
+        Debug.Log(currentLocation.getNeighbors());
     }
+
 
     // Update is called once per frame
     void Update()
