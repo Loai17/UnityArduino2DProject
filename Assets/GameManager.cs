@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -49,5 +50,21 @@ public class GameManager : MonoBehaviour
     {
         if (map != mapRef) mapRef = map;
         if (currentLocation != currentLocationRef) currentLocationRef = currentLocation;
+
+        if(SceneManager.GetActiveScene().name == "NextLocation") 
+        {
+            GameObject location1 = GameObject.FindGameObjectWithTag("Location1");
+            GameObject location2 = GameObject.FindGameObjectWithTag("Location2");
+
+            List<GameObject> locations = new List<GameObject>();
+            locations.Add(location1); locations.Add(location2);
+
+            GraphNode[] nextLocations = currentLocation.getNeighbors();
+            for (int i = 0; i < nextLocations.Length; i++) 
+            {
+                locations[i].GetComponent<GoToLocation>().nextLocation = nextLocations[i].ToString();
+                locations[i].GetComponent<GoToLocation>().textUI.text = nextLocations[i].ToString();
+            }
+        }
     }
 }

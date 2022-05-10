@@ -530,6 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d9ffa3d929c2046bc5ce28a4bf2fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   playerInRange: 0
   cardNeeded: 1
 --- !u!212 &422950511
@@ -1425,8 +1426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e5a133f3f5fd842b726ad3e80871a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 0}
-  currentLocation: {fileID: 0}
+  first: 0
+  treesDestroyed: 0
 --- !u!4 &1661240366
 Transform:
   m_ObjectHideFlags: 0
@@ -1571,6 +1572,7 @@ MonoBehaviour:
   joystickToggle: 0
   rotateToggle: 0
   cardInserted: 0
+  keyboardControl: 0
   port: COM5
   baudrate: 9600
   speed: 0.1
