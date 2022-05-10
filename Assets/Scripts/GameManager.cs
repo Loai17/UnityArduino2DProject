@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     public GraphNode currentLocation;
     public bool first = false;
     public int treesDestroyed;
-    /*    public string currentLocationName;
-    */
+    public string currentLocationName;
+
     void Awake()
     {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("GameManager");
@@ -37,11 +37,11 @@ public class GameManager : MonoBehaviour
         map.addLocation(locationC);
 
         map.addEdge(locationA, locationB, 0);
-        map.addEdge(locationA, locationC, 0);
-        map.addEdge(locationB, locationA, 0);
+//        map.addEdge(locationA, locationC, 0);
+//        map.addEdge(locationB, locationA, 0);
         map.addEdge(locationB, locationC, 0);
         map.addEdge(locationC, locationA, 0);
-        map.addEdge(locationC, locationB, 0);
+//        map.addEdge(locationC, locationB, 0);
 
 
         map.ToString();
@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
         /*        if (map != mapRef) mapRef = map;
                 if (currentLocation != currentLocationRef) currentLocationRef = currentLocation;
         */
+        if (currentLocationName != currentLocation.LocationName) currentLocationName = currentLocation.LocationName;
+
         if (SceneManager.GetActiveScene().name == "NextLocation")
         {
             GameObject location1 = GameObject.FindGameObjectWithTag("Location1");
@@ -67,6 +69,8 @@ public class GameManager : MonoBehaviour
             GraphNode[] nextLocations = currentLocation.getNeighbors();
             for (int i = 0; i < nextLocations.Length; i++)
             {
+                Debug.Log(nextLocations.Length);
+                Debug.Log(nextLocations[i].ToString());
                 locations[i].GetComponent<GoToLocation>().nextLocation = nextLocations[i].ToString();
                 locations[i].GetComponent<GoToLocation>().textUI.text = nextLocations[i].ToString();
             }
