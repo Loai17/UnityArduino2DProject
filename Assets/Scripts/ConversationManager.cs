@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ConversationManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class ConversationManager : MonoBehaviour
     Node start;
     Node root;
     public Tree tutorialTree;
+    public Tree currentTree;
     public Text text;
 
     public List<ButtonInfo> buttons = new List<ButtonInfo>();
@@ -20,20 +22,20 @@ public class ConversationManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Node root = new Node("", "Hello123");
-        start = new Node("Hello and Welcome to this Game!", "How are you today?");
-        Node start1_1 = new Node("First Option");
-        Node start1_2 = new Node("Second Option");
-        Node start2_1 = new Node("Third Option");
-        Node start2_2 = new Node("Third Option B");
-        // Added "Node" here on the line above me - was giving me an error and preventing the game from playing. -L
-
+        Node root = new Node("", "Already home Honey? Shouldnt you be at work?");
         tutorialTree = new Tree(root);
+        start = new Node("I forgot something. I'll have to leave immediatly!", "What did you forget?");
         tutorialTree.addNode(start, root);
-        tutorialTree.addNode(start1_1, start);
-        tutorialTree.addNode(start1_2, start);
-        tutorialTree.addNode(start2_1, start1_2);
-        tutorialTree.addNode(start2_2, start1_1);
+            Node N2_1 = new Node("My Keys", "Wait let me get them for you");
+            tutorialTree.addNode(N2_1, start);
+                Node N3_1 = new Node("Thanks! See you later :)");
+                tutorialTree.addNode(N3_1, N2_1);
+
+            Node N2_2 = new Node("To kiss you <3", ":*");
+            tutorialTree.addNode(N2_2, start);
+                Node N3_2 = new Node(":* Bye");
+                tutorialTree.addNode(N3_2, N2_2);
+       
 
         
         foreach (Button b in buttonsL)
@@ -43,7 +45,8 @@ public class ConversationManager : MonoBehaviour
             buttons.Add(bI);
         }
 
-        initButtons(tutorialTree);
+        currentTree = tutorialTree;
+        initButtons(currentTree);
 
 
     }
@@ -54,18 +57,23 @@ public class ConversationManager : MonoBehaviour
 
     }
 
+    public void SceneChange()
+    {
+        SceneManager.LoadScene("NextLocation");
+    }
+
     public void ButtonClick(Button b)
     {
 
-        if (tutorialTree.Step(tutorialTree.getNextDisplayOptions()[buttonsL.IndexOf(b)]))
+        if (currentTree.Step(currentTree.getNextDisplayOptions()[buttonsL.IndexOf(b)]))
         {
-            initButtons(tutorialTree);
+            initButtons(currentTree);
         }
         else
         {
             Debug.Log("End of Tree reached!");
-            tutorialTree.current = tutorialTree.nodes[0];
-            initButtons(tutorialTree);
+            currentTree.current = currentTree.nodes[0];
+            initButtons(currentTree);
         }
         
         
