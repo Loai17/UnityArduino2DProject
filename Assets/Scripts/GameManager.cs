@@ -63,8 +63,8 @@ public class GameManager : MonoBehaviour
             GraphNode[] nextLocations = currentLocation.getNeighbors();
             for (int i = 0; i < nextLocations.Length; i++)
             {
-                Debug.Log(nextLocations.Length);
-                Debug.Log(nextLocations[i].ToString());
+                //Debug.Log(nextLocations.Length);
+                //Debug.Log(nextLocations[i].ToString());
                 locations[i].GetComponent<GoToLocation>().nextLocation = nextLocations[i].ToString();
                 locations[i].GetComponent<GoToLocation>().textUI.text = nextLocations[i].ToString();
             }

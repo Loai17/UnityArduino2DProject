@@ -27,6 +27,8 @@ public class ConversationManager : MonoBehaviour
     public float timer;
     public bool choosingAllowed;
 
+    InventoryList iL;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,6 +86,20 @@ public class ConversationManager : MonoBehaviour
         initButtons(currentTree);
 
         aM = GameObject.Find("Player").GetComponent<ArduinoMechanics>();
+
+        iL = GameObject.Find("GameManager").GetComponent<InventoryList>();
+
+        if (this.TreeNum == 1)
+        {
+            foreach(GameObject g in iL.inventory)
+            {
+                if (g.GetComponent<Interactable>().itemName == "KeyCard")
+                {
+                    currentTree = trees[2];
+                    initButtons(currentTree);
+                }
+            }
+        }
     }
 
     // Update is called once per frame

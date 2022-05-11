@@ -96,4 +96,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invL: {fileID: 0}
-  spacing: 0.75
+  spacing: 0.9
+  space: 0.5

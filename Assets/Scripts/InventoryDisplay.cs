@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InventoryDisplay : MonoBehaviour
 {
 
     public InventoryList invL;
-    public float spacing = 0.15f;
-    float space = 0.35f;
+    public float spacing;
+    public float space;
     ArduinoMechanics arM;
+    public GameObject interactableHolder;
+    public List<Interactable> interactables = new List<Interactable>();
+    public List<GameObject> interactablesG = new List<GameObject>();
 
     private void Awake()
     {
@@ -33,6 +37,29 @@ public class InventoryDisplay : MonoBehaviour
     {
         invL = GameObject.Find("GameManager").GetComponent<InventoryList>();
         arM = GameObject.Find("Player").GetComponent<ArduinoMechanics>();
+
+        Debug.Log(SceneManager.GetActiveScene().name);
+        if (SceneManager.GetActiveScene().name == "Forest")
+        {
+            for (int i = 0; i < interactableHolder.transform.childCount; i++)
+            {
+                interactables.Add(interactableHolder.transform.GetChild(i).GetComponent<Interactable>());
+            }
+            foreach (GameObject g in interactablesG)
+            {
+                foreach (GameObject g2 in invL.inventory)
+                {
+                    Debug.Log("===");
+                    Debug.Log((g.name, g2.name));
+                    if (g.name == g2.name)
+                    {
+                        Destroy(g);
+                    }
+                }
+            }
+        }
+
+        
     }
 
     // Update is called once per frame

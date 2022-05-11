@@ -6,6 +6,8 @@ public class Interactable : MonoBehaviour
 {
     GameObject gM;
     GameObject iV;
+    public string itemName;
+
     private void Start()
     {
         gM = GameObject.Find("GameManager");

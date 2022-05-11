@@ -33,12 +33,13 @@ public class ArduinoMechanics : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        OpenConnection();
+        if (!keyboardControl) OpenConnection();
+
     }
 
     private void OnDestroy()
     {
-        CloseConnection();
+        if (!keyboardControl) CloseConnection();
     }
 
     // Update is called once per frame
