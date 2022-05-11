@@ -10,6 +10,7 @@ public class ConversationManager : MonoBehaviour
     Node start;
     Node root;
     public Tree tutorialTree;
+    public Tree tutorialTreeA;
     Tree fireStation1Tree;
     Tree fireStation2Tree;
     public Tree currentTree;
@@ -36,15 +37,26 @@ public class ConversationManager : MonoBehaviour
         tutorialTree = new Tree(rootT);
         start = new Node("I forgot something. I'll have to leave immediatly!", "What did you forget?");
         tutorialTree.addNode(start, rootT);
-            Node N2_1 = new Node("My Keys", "Wait let me get them for you");
+            Node N2_1 = new Node("My Keys", "They are not here... You must have lost them somewhere!");
             tutorialTree.addNode(N2_1, start);
-                Node N3_1 = new Node("Thanks! See you later :)");
+                Node N3_1 = new Node("Silly me... I'll go and check in the forest");
                 tutorialTree.addNode(N3_1, N2_1);
 
             Node N2_2 = new Node("To kiss you <3", ":*");
             tutorialTree.addNode(N2_2, start);
                 Node N3_2 = new Node(":* Bye");
                 tutorialTree.addNode(N3_2, N2_2);
+
+        Node rootT2 = new Node("", "Already home Honey? Shouldnt you be at work?");
+        tutorialTreeA = new Tree(rootT2);
+        Node start2 = new Node("I forgot something. I'll have to leave immediatly!", "What did you forget?");
+        tutorialTreeA.addNode(start2, rootT2);
+        Node N2_1_A = new Node("My Keys", "But you have them on you, I can see it?");
+        tutorialTreeA.addNode(N2_1_A, start2);
+        Node N3_1_A = new Node("Silly me... I'll better get back to work!");
+        tutorialTreeA.addNode(N3_1_A, N2_1_A);
+        tutorialTreeA.addNode(N2_2, start2);
+        tutorialTreeA.addNode(N3_2, N2_2);
 
         Node rootF = new Node("", "Where is your Key? I can't let you in without it!");
         fireStation1Tree = new Tree(rootF);
@@ -72,6 +84,7 @@ public class ConversationManager : MonoBehaviour
         trees.Add(tutorialTree);
         trees.Add(fireStation1Tree);
         trees.Add(fireStation2Tree);
+        trees.Add(tutorialTreeA);
         
 
 
@@ -96,6 +109,18 @@ public class ConversationManager : MonoBehaviour
                 if (g.GetComponent<Interactable>().itemName == "KeyCard")
                 {
                     currentTree = trees[2];
+                    initButtons(currentTree);
+                }
+            }
+        }
+
+        if (this.TreeNum == 0)
+        {
+            foreach (GameObject g in iL.inventory)
+            {
+                if (g.GetComponent<Interactable>().itemName == "KeyCard")
+                {
+                    currentTree = trees[3];
                     initButtons(currentTree);
                 }
             }
