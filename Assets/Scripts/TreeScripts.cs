@@ -6,6 +6,7 @@ public class TreeScripts : MonoBehaviour
 {
 
     GameObject gM;
+    public Animator fireAnim; 
 
     private void Start()
     {
@@ -18,14 +19,17 @@ public class TreeScripts : MonoBehaviour
         {
             if (col.gameObject.GetComponent<ArduinoMechanics>().fireToggle)
             {
-                TreeDestroyed();
-                gM.GetComponent<GameManager>().treesDestroyed += 1;
+                StartCoroutine(TreeDestroyed());
             }
         }
     }
 
-    public void TreeDestroyed()
+    public IEnumerator TreeDestroyed()
     {
+        fireAnim.SetBool("OnFire", true);
+        yield return new WaitForSeconds(1.1f);
+        fireAnim.SetBool("OnFire", false);
+        gM.GetComponent<GameManager>().treesDestroyed += 1;
         Destroy(this.gameObject);
     }
 }

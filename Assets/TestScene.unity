@@ -366,9 +366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d9ffa3d929c2046bc5ce28a4bf2fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  playerInRange: 0
-  cardNeeded: 0
 --- !u!212 &422950511
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -863,6 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abcb0a5d5feeee41834c9ca8e3b711d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: 
 --- !u!61 &1481063300
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1200,11 +1198,12 @@ MonoBehaviour:
   joystickToggle: 0
   rotateToggle: 0
   cardInserted: 0
-  keyboardControl: 1
+  keyboardControl: 0
   port: COM5
   baudrate: 9600
   speed: 0.1
   player: {fileID: 1762857847}
+  blockY: 0
 --- !u!95 &1762857852
 Animator:
   serializedVersion: 3
@@ -1545,6 +1544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abcb0a5d5feeee41834c9ca8e3b711d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: 
 --- !u!50 &1999884484
 Rigidbody2D:
   serializedVersion: 4
