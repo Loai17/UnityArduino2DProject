@@ -16,7 +16,7 @@ public class ArduinoMechanics : MonoBehaviour
 
     Animator anim;
 
-    public string port = "COM6";
+    public string port = "COM5";
     public int baudrate = 9600;
     SerialPort arduinoPort;
     bool isStreaming = false;

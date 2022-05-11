@@ -1674,6 +1674,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: InventoryDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 2986556851222763654, guid: 39819ebb561a9bb4382da6a8e944eee9,
+        type: 3}
+      propertyPath: interactableHolder
+      value: 
+      objectReference: {fileID: 175197793}
     - target: {fileID: 2986556851222763655, guid: 39819ebb561a9bb4382da6a8e944eee9,
         type: 3}
       propertyPath: m_RootOrder

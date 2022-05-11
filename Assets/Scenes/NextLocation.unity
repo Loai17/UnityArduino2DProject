@@ -350,9 +350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d9ffa3d929c2046bc5ce28a4bf2fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  playerInRange: 0
-  cardNeeded: 0
 --- !u!212 &422950511
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -696,6 +693,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 78334525592456540, guid: 8ee22c3c0697ea34cb0aa0b8a85c050e,
+        type: 3}
+      propertyPath: port
+      value: COM3
       objectReference: {fileID: 0}
     - target: {fileID: 78334525592456542, guid: 8ee22c3c0697ea34cb0aa0b8a85c050e,
         type: 3}

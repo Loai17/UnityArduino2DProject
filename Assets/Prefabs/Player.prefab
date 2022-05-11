@@ -104,8 +104,8 @@ MonoBehaviour:
   joystickToggle: 0
   rotateToggle: 0
   cardInserted: 0
-  keyboardControl: 1
-  port: COM6
+  keyboardControl: 0
+  port: COM3
   baudrate: 9600
   speed: 0.1
   player: {fileID: 78334525592456528}
