@@ -3,36 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Node.cs;
+using Tree.cs;
 
 public class ConversationManager : MonoBehaviour
 {
-
+    // Defining Trees needed for story
     Node start;
     Node root;
     public Tree tutorialTree;
     public Tree tutorialTreeA;
     Tree fireStation1Tree;
     Tree fireStation2Tree;
-    public Tree currentTree;
-    public Text text;
+    public int TreeNum;
+    public List<Tree> trees = new List<Tree>();
+ 
 
+    // Tree currently selected and being displayed 
+    public Tree currentTree;
+
+    // Unity UI Objects to display the Dialogues
+    public Text text;
     public List<ButtonInfo> buttons = new List<ButtonInfo>();
     public List<Button> buttonsL = new List<Button>();
     public Text staticTextField;
 
-    public int TreeNum;
-    public List<Tree> trees = new List<Tree>();
+
     public ArduinoMechanics aM;
 
+    // Help Variables to force a delay between selection via the controller to prevent too many inputs at once
     public float delayTime = 0.5f;
     public float timer;
     public bool choosingAllowed;
 
+    // Access to the object storing the inventory to change conversation tree based on which items are in the inventory
     InventoryList iL;
 
-    // Start is called before the first frame update
     void Start()
     {
+        // Fetching needed scripts from the scene
+        aM = GameObject.Find("Player").GetComponent<ArduinoMechanics>();
+        iL = GameObject.Find("GameManager").GetComponent<InventoryList>();
+
+        // Defining the Trees and adding the Story
         Node rootT = new Node("", "Already home Honey? Shouldnt you be at work?");
         tutorialTree = new Tree(rootT);
         start = new Node("I forgot something. I'll have to leave immediatly!", "What did you forget?");
@@ -80,14 +93,12 @@ public class ConversationManager : MonoBehaviour
             Node FF2_2 = new Node("Yessir. See you later!");
             fireStation2Tree.addNode(FF2_2, FF1_2);
 
-
+        // Adding Trees to a list to manage them
         trees.Add(tutorialTree);
         trees.Add(fireStation1Tree);
         trees.Add(fireStation2Tree);
         trees.Add(tutorialTreeA);
         
-
-
         foreach (Button b in buttonsL)
         {
             ButtonInfo bI = new ButtonInfo();
@@ -95,13 +106,12 @@ public class ConversationManager : MonoBehaviour
             buttons.Add(bI);
         }
 
+        // Initiation of the UI from the current Treee
         currentTree = trees[TreeNum];
         initButtons(currentTree);
 
-        aM = GameObject.Find("Player").GetComponent<ArduinoMechanics>();
 
-        iL = GameObject.Find("GameManager").GetComponent<InventoryList>();
-
+        // Some game logic to change the tree according to items the player already picked up
         if (this.TreeNum == 1)
         {
             foreach(GameObject g in iL.inventory)
@@ -127,9 +137,9 @@ public class ConversationManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Timer to handle too many inputs from the Arduino
         if (timer < delayTime)
         {
             timer += Time.deltaTime;
@@ -139,6 +149,8 @@ public class ConversationManager : MonoBehaviour
             timer = 0;
             choosingAllowed = true;
         }
+
+        // Getting Input from the Arduino Manager and calling functions accordingly
         if (aM.joystickToggle && choosingAllowed)
         {
             choosingAllowed = false;
@@ -153,11 +165,13 @@ public class ConversationManager : MonoBehaviour
         }
     }
 
+
     public void SceneChange()
     {
         SceneManager.LoadScene("NextLocation");
     }
 
+    // Traversing the tree with the 'Step' function when the player click through the dialogue options (only needed if the button clicks come from the ui and not the arduino)
     public void ButtonClick(Button b)
     {
 
@@ -175,6 +189,7 @@ public class ConversationManager : MonoBehaviour
         
     }
 
+    // Traversing the tree with the 'Step' function when the player click through the dialogue options by using the Arduino
     public void ButtonClickArduino(int i)
     {
 
@@ -190,6 +205,8 @@ public class ConversationManager : MonoBehaviour
         }
     }
 
+
+    // Setting up the text in the buttons according to the current node found in the tree
     void initButtons(Tree t)
     {
         List<Node> nodes = t.getNextDisplayOptions();
@@ -209,109 +226,10 @@ public class ConversationManager : MonoBehaviour
         }
     }
 
+    // Struct used to handle button inputs via the UI 
     public struct ButtonInfo
     {
         public Button b;
         public Node n;
-    }
-
-    public class Tree
-    {
-        Node root;
-        public List<Node> nodes = new List<Node>();
-        public Node current;
-
-        public Tree(Node r)
-        {
-            root = r;
-            current = root;
-            nodes.Add(root);
-        }
-
-        public void addNode(Node n, Node parent)
-        {
-            parent.addChild(n);
-            n.setParent(parent);
-            nodes.Add(n);
-
-        }
-
-        public string getCurrentText()
-        {
-            return current.getText();
-        }
-
-        public List<Node> getNextOptions()
-        {
-            List<Node> h = current.getChildren();
-            h.Add(current.getParent());
-            return h;
-        }
-
-
-        public List<Node> getNextDisplayOptions()
-        {
-            return current.getChildren();
-        }
-
-        public bool Step(Node n)
-        {
-            if (getNextDisplayOptions().Contains(n))
-            {
-                current = n;
-                if (n.getChildren().Count == 0) return false;
-                return true;
-            }
-            return false;
-        }
-
-    }
-
-    public class Node
-    {
-
-        List<Node> children = new List<Node>();
-        public Node parent;
-        string textToDisplay;
-        public string staticText;
-
-
-
-        public Node(string text, string _staticText = "")
-        {
-            textToDisplay = text;
-            staticText = _staticText;
-        }
-
-        public Node addChild(Node newChild)
-        {
-            children.Add(newChild);
-            return newChild;
-        }
-
-        public void Print()
-        {
-            Debug.Log('a');
-        }
-
-        public string getText()
-        {
-            return textToDisplay;
-        }
-
-        public List<Node> getChildren()
-        {
-            return children;
-        }
-
-        public Node getParent()
-        {
-            return parent;
-        }  
-        public void setParent(Node p)
-        {
-            this.parent = p;
-        }
-
-    }
+    }        
 }
