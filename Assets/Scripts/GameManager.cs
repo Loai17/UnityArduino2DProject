@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public Graph map;
     public GraphNode currentLocation;
-    public bool first = false;
     public int treesDestroyed;
     public string currentLocationName;
 

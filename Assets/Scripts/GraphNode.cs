@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GraphNode
 {
-    List<GraphEdge> edges;
-    public string LocationName;
+
+    // In our project, we call a "Graph Node" as a "Location"
+
+    List<GraphEdge> edges; // List of connected edges.
+    public string LocationName; // Only attribute of a node is a location name which is equivalent the unity 'scene' name.
 
     public GraphNode(string name)
     {
@@ -13,48 +16,12 @@ public class GraphNode
         edges = new List<GraphEdge>();
     }
 
-    int getDeg()
-    {
-        return edges.Count;
-    }
-
     public void AddEdge(GraphEdge edge)
     {
         edges.Add(edge);
     }
 
-    public bool IsAdjacent(GraphNode otherLocation)
-    {
-        foreach (GraphEdge edge in edges)
-        {
-            if (edge.isIncidentTo(otherLocation))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public float GetAdjacenceWeight(GraphNode otherLocation)
-    {
-        foreach (GraphEdge edge in edges)
-        {
-            if (otherLocation == this) // checking loops
-            {
-                if (edge.LocationA == edge.LocationB)
-                {
-                    return edge.Weight;
-                }
-            } // checking incidence for different Locations
-            else if (edge.isIncidentTo(otherLocation))
-            {
-                return edge.Weight;
-            }
-        }
-        return 0f;
-    }
-
-    public GraphNode[] getNeighbors()
+    public GraphNode[] getNeighbors() // Function that returns the neighboring nodes/locations to the current node/location, by checking the connected edges.
     {
         GraphNode[] neighbours = new GraphNode[edges.Count];
         int i = 0;
@@ -73,12 +40,7 @@ public class GraphNode
         return neighbours;
     }
 
-    void addEdge(GraphEdge edge)
-    {
-        edges.Add(edge);
-    }
-
-    public override string ToString()
+    public override string ToString() // Returns the location name of node.
     {
         return LocationName;
     }
