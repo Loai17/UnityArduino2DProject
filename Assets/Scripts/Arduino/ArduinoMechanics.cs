@@ -23,7 +23,6 @@ public class ArduinoMechanics : MonoBehaviour
 
     public float speed = 100;
     public GameObject player;
-/*    Rigidbody ballBody;*/
     float tempTime;
     float sendRate = 0.1f;
 

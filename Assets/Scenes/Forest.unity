@@ -976,10 +976,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f434da8a182be64193aff0ecf9de8e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  port: COM5
-  baudrate: 9600
-  speed: 2
-  ball: {fileID: 0}
 --- !u!1 &774741461 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8891075809099519904, guid: 06426793a720f764fa4011a357021d47,
@@ -1627,7 +1623,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e5a133f3f5fd842b726ad3e80871a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 0
   treesDestroyed: 0
   currentLocationName: 
 --- !u!4 &1661240366
@@ -1687,7 +1682,7 @@ PrefabInstance:
     - target: {fileID: 2986556851222763655, guid: 39819ebb561a9bb4382da6a8e944eee9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.93
+      value: -8.8
       objectReference: {fileID: 0}
     - target: {fileID: 2986556851222763655, guid: 39819ebb561a9bb4382da6a8e944eee9,
         type: 3}

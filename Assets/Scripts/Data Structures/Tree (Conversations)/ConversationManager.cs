@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Node.cs;
-using Tree.cs;
+
 
 public class ConversationManager : MonoBehaviour
 {

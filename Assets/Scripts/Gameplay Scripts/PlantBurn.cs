@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreeScripts : MonoBehaviour
+public class PlantBurn : MonoBehaviour
 {
 
     GameObject gM;
